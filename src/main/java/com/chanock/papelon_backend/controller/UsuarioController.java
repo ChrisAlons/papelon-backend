@@ -7,6 +7,7 @@ import com.chanock.papelon_backend.dto.UsuarioResponseDto;
 import com.chanock.papelon_backend.model.Usuario;
 import com.chanock.papelon_backend.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Tag(name = "Usuarios", description = "Gestión de usuarios: CRUD y listado")
 @RestController
 @RequestMapping("/api/usuarios")
 @RequiredArgsConstructor

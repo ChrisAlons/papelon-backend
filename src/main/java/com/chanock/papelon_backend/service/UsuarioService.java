@@ -6,6 +6,7 @@ import com.chanock.papelon_backend.exception.ResourceNotFoundException;
 import com.chanock.papelon_backend.model.Usuario;
 import com.chanock.papelon_backend.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,13 +19,14 @@ public class UsuarioService {
     private final UsuarioRepository repo;
     private final PasswordEncoder passwordEncoder;
 
+    /** Devuelve todos los usuarios ordenados por ID asc */
     public List<Usuario> findAll() {
-        return repo.findAll();
+        return repo.findAll(Sort.by(Sort.Direction.ASC, "id"));
     }
 
     public Usuario findById(Integer id) {
         return repo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuario", (id)));
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario", id));
     }
 
     public Usuario create(UsuarioRequestDto dto) {
