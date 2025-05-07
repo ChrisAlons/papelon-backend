@@ -3,29 +3,41 @@ package com.chanock.papelon_backend.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import org.hibernate.annotations.CreationTimestamp;
+
 
 @Entity
 @Table(name = "detalle_compra")
-@Data @NoArgsConstructor @AllArgsConstructor @Builder
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class DetalleCompra {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
 
-    @ManyToOne @JoinColumn(name="compra_id", nullable=false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "compra_id", nullable = false)
     private Compra compra;
 
-    @ManyToOne @JoinColumn(name="producto_id", nullable=false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "producto_id", nullable = false)
     private Producto producto;
 
-    @Column(name="cantidad", nullable=false)
+    @Column(name = "cantidad", nullable = false)
     private Integer cantidad;
 
-    @Column(name="precio_unitario", nullable=false)
+    @Column(name = "precio_unitario", nullable = false)
     private BigDecimal precioUnitario;
 
-    @Column(name="created_at")
+    @CreationTimestamp
+    @Column(name="created_at", insertable=false, updatable=false)
     private LocalDateTime createdAt;
+
 }

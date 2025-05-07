@@ -3,31 +3,40 @@ package com.chanock.papelon_backend.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "cliente")
-@Data @NoArgsConstructor @AllArgsConstructor @Builder
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Cliente {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
 
-    @Column(name="nombre", length=100, nullable=false)
+    @Column(name = "nombre", length = 100, nullable = false)
     private String nombre;
 
-    @Column(name="email", length=100)
+    @Column(name = "email", length = 100)
     private String email;
 
-    @Column(name="telefono", length=15)
+    @Column(name = "telefono", length = 15)
     private String telefono;
 
-    @Column(name="direccion")
+    @Column(name = "direccion")
     private String direccion;
 
-    @Column(name="created_at")
-    private OffsetDateTime createdAt;
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
-    @Column(name="updated_at")
-    private OffsetDateTime updatedAt;
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 }
