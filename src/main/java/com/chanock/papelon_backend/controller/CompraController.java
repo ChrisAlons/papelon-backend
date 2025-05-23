@@ -29,7 +29,9 @@ public class CompraController {
     private DetalleCompraResponseDto toDto(DetalleCompra dc) {
         DetalleCompraResponseDto dto = new DetalleCompraResponseDto();
         dto.setId(dc.getId());
+        dto.setCompraId(dc.getCompra().getId());
         dto.setProductoId(dc.getProducto().getId());
+        dto.setNombreProducto(dc.getProducto().getNombre());
         dto.setCantidad(dc.getCantidad());
         dto.setPrecioUnitario(dc.getPrecioUnitario());
         dto.setCreatedAt(dc.getCreatedAt());
@@ -40,7 +42,9 @@ public class CompraController {
         CompraResponseDto dto = new CompraResponseDto();
         dto.setId(c.getId());
         dto.setUsuarioId(c.getUsuario().getId());
+        dto.setNombreUsuario(c.getUsuario().getUsername());
         dto.setProveedorId(c.getProveedor().getId());
+        dto.setNombreProveedor(c.getProveedor().getNombre());
         dto.setFecha(c.getFecha());
         dto.setTotal(c.getTotal());
         dto.setCreatedAt(c.getCreatedAt());

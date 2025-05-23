@@ -12,6 +12,9 @@ public class InventarioResponseDto {
     @Schema(description = "ID del producto", example = "1")
     private Integer productoId;
 
+    @Schema(description = "Nombre del producto", example = "Lápiz Mongol")
+    private String nombreProducto;
+
     @Schema(description = "Stock actual", example = "50")
     private Integer stockActual;
 

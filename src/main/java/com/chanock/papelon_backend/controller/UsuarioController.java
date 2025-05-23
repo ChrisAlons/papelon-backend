@@ -10,12 +10,15 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 
 @Tag(name = "Usuarios", description = "Gestión de usuarios: CRUD y listado")
 @RestController
@@ -23,8 +26,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UsuarioController {
 
-    private final UsuarioService svc;
 
+    private final UsuarioService svc;
+    
     private UsuarioResponseDto toDto(Usuario u) {
         UsuarioResponseDto dto = new UsuarioResponseDto();
         dto.setId(u.getId());
@@ -73,5 +77,19 @@ public class UsuarioController {
     public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Integer id) {
         svc.delete(id);
         return ResponseEntity.ok(new ApiResponse<>(true, "Usuario eliminado", null));
+    }
+
+    @Operation(summary = "Obtener usuario actual", description = "Devuelve datos del usuario autenticado")
+    @GetMapping("/me")
+    public ResponseEntity<ApiResponse<UsuarioResponseDto>> me(@AuthenticationPrincipal User principal) {
+        UsuarioResponseDto dto = new UsuarioResponseDto();
+        // Fetch user entity from service by username
+        var user = svc.findByUsername(principal.getUsername());
+        dto.setId(user.getId());
+        dto.setUsername(user.getUsername());
+        dto.setRol(user.getRol());
+        dto.setCreatedAt(user.getCreatedAt());
+        dto.setUpdatedAt(user.getUpdatedAt());
+        return ResponseEntity.ok(new ApiResponse<>(true, "Usuario autenticado", dto));
     }
 }

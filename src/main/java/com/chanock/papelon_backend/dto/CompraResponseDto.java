@@ -17,8 +17,14 @@ public class CompraResponseDto {
     @Schema(description="ID del usuario que registró", example="1")
     private Integer usuarioId;
 
+    @Schema(description="Nombre del usuario que registró", example="Juan Pérez")
+    private String nombreUsuario;
+
     @Schema(description="ID del proveedor", example="2")
     private Integer proveedorId;
+
+    @Schema(description="Nombre del proveedor", example="Proveedor A")
+    private String nombreProveedor;
 
     @Schema(description="Fecha de la compra")
     private LocalDateTime fecha;

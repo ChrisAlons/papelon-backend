@@ -13,7 +13,7 @@ public class UsuarioRequestDto {
     @Schema(description = "Nombre de usuario único", example = "juan.perez")
     private String username;
 
-    @NotBlank @Size(min = 5, max = 100)
+    @Size(min = 5, max = 100)
     @Schema(description = "Contraseña en texto plano (será encriptada)", example = "Secret123!")
     private String password;
 

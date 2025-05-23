@@ -24,7 +24,8 @@ public class InventarioController {
 
     private InventarioResponseDto toDto(Inventario i) {
         InventarioResponseDto dto = new InventarioResponseDto();
-        dto.setProductoId(i.getProductoId());
+        dto.setProductoId(i.getProducto().getId());
+        dto.setNombreProducto(i.getProducto().getNombre());
         dto.setStockActual(i.getStockActual());
         dto.setUpdatedAt(i.getUpdatedAt());
         return dto;

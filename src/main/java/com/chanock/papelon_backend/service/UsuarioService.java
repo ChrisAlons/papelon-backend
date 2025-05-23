@@ -51,4 +51,9 @@ public class UsuarioService {
         Usuario u = findById(id);
         repo.delete(u);
     }
+
+    public Usuario findByUsername(String username) {
+        return repo.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario", Integer.valueOf(username)));
+    }
 }

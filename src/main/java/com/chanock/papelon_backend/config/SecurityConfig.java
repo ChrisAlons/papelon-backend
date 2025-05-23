@@ -11,6 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.authentication.AuthenticationManager;
 
 import java.util.List;
 
@@ -36,13 +38,21 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // Deshabilitamos CSRF (API REST sin cookies)
-                .csrf(AbstractHttpConfigurer::disable)
-                // Permitimos todas las rutas sin autenticación
-                .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll()
-                );
+            .csrf(AbstractHttpConfigurer::disable)
+            .cors().and()
+            .authorizeHttpRequests(auth -> auth
+                // CAJERO and ADMIN can access sales, inventory, clients
+                .requestMatchers("/api/ventas/**", "/api/inventario/**", "/api/clientes/**").hasAnyRole("ADMIN","CAJERO")
+                // ADMIN only endpoints
+                .requestMatchers("/api/**").hasRole("ADMIN")
+            )
+            .httpBasic();
         return http.build();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
     }
 
     @Bean

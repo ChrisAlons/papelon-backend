@@ -34,4 +34,6 @@ public class Usuario {
     @UpdateTimestamp
     @Column(name="updated_at")
     private LocalDateTime updatedAt;
+
+
 }

@@ -20,14 +20,21 @@ public class Inventario {
     @Column(name = "id")
     private Integer id;
 
-    /** FK al producto */
-    @Column(name = "producto_id", nullable = false, unique = true)
-    private Integer productoId;
-
     @Column(name = "stock_actual", nullable = false)
     private Integer stockActual;
 
     @Column(name = "updated_at", insertable = false, updatable = false)
     @Generated(GenerationTime.ALWAYS)
     private LocalDateTime updatedAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "producto_id", nullable = false)
+    private Producto producto;
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+
+
 }
