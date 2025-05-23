@@ -41,8 +41,10 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             .cors().and()
             .authorizeHttpRequests(auth -> auth
+                // Permitir que ADMIN y CAJERO accedan a /api/usuarios/me
+                .requestMatchers("/api/usuarios/me").hasAnyRole("ADMIN", "CAJERO")
                 // CAJERO and ADMIN can access sales, inventory, clients
-                .requestMatchers("/api/ventas/**", "/api/inventario/**", "/api/clientes/**").hasAnyRole("ADMIN","CAJERO")
+                .requestMatchers("/api/ventas/**", "/api/inventario/**", "/api/clientes/**", "/api/productos", "/api/usuarios").hasAnyRole("ADMIN","CAJERO")
                 // ADMIN only endpoints
                 .requestMatchers("/api/**").hasRole("ADMIN")
             )
